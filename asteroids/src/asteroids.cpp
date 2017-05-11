@@ -27,6 +27,8 @@ int 	shields;
 struct ship player;
 double shipX = 240;
 double shipY = 146;
+double rockX = 100;
+double rockY = 100;
 double shipTipX = shipX;
 double shipTipY = shipY-15;
 double shipRghtCrnrX = shipX +7;

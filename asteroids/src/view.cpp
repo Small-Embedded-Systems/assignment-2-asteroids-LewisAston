@@ -17,6 +17,7 @@
 #include "asteroids.h"
 #include "model.h"
 #include "utils.h"
+#include "objects.h"
 
 Display *graphics = Display::theDisplay();
 
@@ -39,13 +40,12 @@ void swap_DBuffer(void)
 }
 
 void drawInfo() {
-		
 		graphics->setCursor(400,15);
 		graphics->printf("Score: ");
 		graphics->setCursor(210,15);
 		graphics->printf("ASTEROIDS");
 		for (int i=1;i<=lives;i++){
-		graphics->drawTriangle(i*20,10,(i*20)-5,25,(i*20)+5,25,WHITE);
+			graphics->drawTriangle(i*20,10,(i*20)-5,25,(i*20)+5,25,WHITE);
 		}
 }
 
@@ -54,9 +54,10 @@ void drawShip() {
 		graphics->drawLine(shipX, shipY, shipRghtCrnrX, shipRghtCrnrY, WHITE); 
 		graphics->drawLine(shipLftCrnrX, shipLftCrnrY, shipX, shipY, WHITE); 
 		graphics->drawLine(shipLftCrnrX, shipLftCrnrY, shipTipX, shipTipY, WHITE); 
-		
-		/*graphics->setCursor(20,100);
-		graphics->printf("angle = %f", angle);*/
+}
+
+void drawRock() {
+	graphics->drawBitmap(rockX,rockY,rock,16,16,WHITE);
 }
 
 void drawShield()
@@ -66,14 +67,12 @@ void drawShield()
   }
 }
 
-
-
 void draw(void)
 {
     graphics->fillScreen(background);
 		drawInfo();
 		drawShip();
 		drawShield();
-		
+		drawRock();
     swap_DBuffer();
 }

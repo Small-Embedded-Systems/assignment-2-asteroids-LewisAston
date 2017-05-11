@@ -8,6 +8,8 @@ extern float elapsed_time; /* time this ship has been active */
 extern int   score;        /* total score so far */
 extern int   lives;        /* lives remaining */
 extern int	 shields;
+extern double rockX;
+extern double rockY;
 extern double shipX;
 extern double shipY;
 extern double shipTipX;

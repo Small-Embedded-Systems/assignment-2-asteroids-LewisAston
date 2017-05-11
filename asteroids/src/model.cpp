@@ -11,6 +11,7 @@
 #include "asteroids.h"
 
 
+
 /* If you want to initialise a linked list:
     You'll have to replace node_t with the right type
 
@@ -44,10 +45,6 @@ int x, y, x1, y1, x2, y2;
 		float velY;
 
 void shipSpin() {
-
-				
-   
-				
         // calculate x, y from a vector with known length and angle
         x = radius * cos (angle);
         y = radius * sin (angle);
@@ -84,10 +81,7 @@ void shipSpin() {
 						joyUp = false;
 						angle = angle;
 				}		
-    
-
 }
-
 		
 void shipThrust() {
 		/*if (accel > 7 && joyUp == true) {
@@ -104,6 +98,15 @@ void shipThrust() {
 		}	
 }
 
+void hitRock() {
+	if (shields > 0 && rockX + 8 >= shipX -14 && shipX +8 <= rockX +14 && rockY >= shipY -14 && rockY <= shipY +14 ) {
+		rockX = 140;
+		shields--;
+	} else if (shields < 1 && rockX + 8 >= shipX -14 && shipX +8 <= rockX +14 && rockY >= shipY -14 && rockY <= shipY +14 ) {
+		rockX = 140;
+		lives--;
+	}
+}
 
 void onScreen() {
 	if(shipY <= -10) {
@@ -122,5 +125,6 @@ void physics(void) {
 		onScreen();
 		shipSpin();
 		shipThrust();
+		hitRock();
 }
 
