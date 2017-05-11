@@ -1,4 +1,6 @@
-/* Asteroids model */
+/* Asteroids model
+		handles updating the game state, moving the objects, and handling collisions
+*/
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -29,8 +31,96 @@ node_t *initialise()
 }
 */
 
-void physics(void)
-{
+
+
+int x, y, x1, y1, x2, y2;
+    int radius = 15;
+    float angle = 0.0;
+    float angle_stepsize = 0.025;
+		/*double accel = 100;
+    double accel_stepsize = 1;*/
+		float PI = 3.1415926f;
+		float velX;
+		float velY;
+
+void shipSpin() {
+
+				
+   
+				
+        // calculate x, y from a vector with known length and angle
+        x = radius * cos (angle);
+        y = radius * sin (angle);
+				x1 = radius * cos (angle+ 3.83972);
+        y1 = radius * sin (angle+ 3.83972);
+				x2 = radius * cos (angle+ 2.44346);
+        y2 = radius * sin (angle+ 2.44346);
+	
+				shipTipX = x+shipX;
+				shipTipY = y+shipY;
+				shipLftCrnrX = x1+shipX;
+				shipLftCrnrY = y1+shipY;
+				shipRghtCrnrX = x2+shipX;
+				shipRghtCrnrY = y2+shipY;
+
+        //angle += angle_stepsize;
+	
+				if (angle > 2 * PI) {
+						angle = 0.1;
+				}
+				if (angle < 0 ) {
+						angle = (2 * PI) - 0.1;
+				}
+				if (joyLeft == true) {
+						angle += angle_stepsize;
+				}
+				if (joyRight == true) {
+						angle -= angle_stepsize;
+				}
+				if (joyDown == true) {
+						joyLeft = false;
+						joyRight = false;
+						joyDown = false;
+						joyUp = false;
+						angle = angle;
+				}		
     
+
+}
+
+		
+void shipThrust() {
+		/*if (accel > 7 && joyUp == true) {
+			accel -= accel_stepsize;
+		}
+		if (accel < 100 && joyUp == false) {
+			accel += accel_stepsize;
+		}*/
+		velX = (10 * cos (angle));
+		velY = (10 * sin (angle));
+		if (joyUp == true /*|| accel !=100*/) {
+				shipX += (velX / 20 /*accel*/);
+				shipY += (velY / 20 /*accel*/);
+		}	
+}
+
+
+void onScreen() {
+	if(shipY <= -10) {
+		shipY = 272;
+	}	else if(shipY >=282) {
+		shipY = 0;
+	}
+	if(shipX <= -10) {
+		shipX = 480;
+	} else if(shipX >= 490) {
+		shipX = 0;
+	}
+}
+
+void physics(void) {
+		onScreen();
+		shipSpin();
+		shipThrust();
 }
 
