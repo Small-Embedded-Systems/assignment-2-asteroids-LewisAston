@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "model.h"
 #include "utils.h"
@@ -98,7 +99,49 @@ void shipThrust() {
 		}	
 }
 
-void hitRock() {
+void spawnRock(rock_t* head) {
+	
+	if (frames % 100 == 0 && rockCount <15) {
+		rock_t* current = head;
+		while (current->next !=NULL) {
+			current = current->next;
+		}
+		current->next = (rock_t*)malloc(sizeof(rock_t));
+		current->next->p.x = randrange(16, 465);
+		current->next->p.y = randrange(16, 257);
+		current->next->v.x = randrange(-2, 3);
+		current->next->v.y = randrange(-2, 3);
+		if (current->next->v.x == 0 && current->next->v.y == 0) {
+			current->next->v.x = 1;
+		}
+		current->next->next = NULL;
+		rockCount++;
+	}
+}
+
+/*void rocksOnscreen(rock_t* head) {
+	rock_t* current = head;
+	if (current !=NULL) {
+		current->p.x += current->v.x;
+		current->p.y += current->v.y;
+	}
+	if (current->p.x > 500) {
+		current->p.x = -20;
+	}
+	if (current->p.x < -20) {
+		current->p.x = 500;
+	}
+	if (current->p.y > 290) {
+		current->p.y = -20;
+	}
+	if (current->p.x < -20) {
+		current->p.x = 290;
+	}
+	current = current->next;
+	rocksOnscreen(current);
+}*/
+
+/*void hitRock() {
 	if (shields > 0 && rockX + 8 >= shipX -14 && shipX +8 <= rockX +14 && rockY >= shipY -14 && rockY <= shipY +14 ) {
 		rockX = 140;
 		shields--;
@@ -106,7 +149,7 @@ void hitRock() {
 		rockX = 140;
 		lives--;
 	}
-}
+}*/
 
 void onScreen() {
 	if(shipY <= -10) {
@@ -122,9 +165,12 @@ void onScreen() {
 }
 
 void physics(void) {
+		frames++;
+		spawnRock(asteroids);
+		//rocksOnscreen(asteroids);
 		onScreen();
 		shipSpin();
 		shipThrust();
-		hitRock();
+		//hitRock();
 }
 

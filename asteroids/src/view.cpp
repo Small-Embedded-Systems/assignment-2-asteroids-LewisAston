@@ -47,6 +47,9 @@ void drawInfo() {
 		for (int i=1;i<=lives;i++){
 			graphics->drawTriangle(i*20,10,(i*20)-5,25,(i*20)+5,25,WHITE);
 		}
+		
+		graphics->setCursor(300,100);
+		graphics->printf("frames: %d", frames);
 }
 
 void drawShip() {
@@ -56,8 +59,12 @@ void drawShip() {
 		graphics->drawLine(shipLftCrnrX, shipLftCrnrY, shipTipX, shipTipY, WHITE); 
 }
 
-void drawRock() {
-	graphics->drawBitmap(rockX,rockY,rock,16,16,WHITE);
+void drawRock(rock_t *head) {
+	rock_t* current = head;
+	while ( current !=NULL) {
+		graphics->drawBitmap(current->p.x,current->p.y,rock,16,16,WHITE);
+		current = current->next;
+	}
 }
 
 void drawShield()
@@ -73,6 +80,6 @@ void draw(void)
 		drawInfo();
 		drawShip();
 		drawShield();
-		drawRock();
+		drawRock(asteroids);
     swap_DBuffer();
 }
