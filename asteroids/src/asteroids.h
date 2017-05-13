@@ -11,8 +11,6 @@ extern int	 shields;
 extern int rockCount;
 extern int shotCount;
 extern int frames;
-//extern double rockX;
-//extern double rockY;
 extern double shipX;
 extern double shipY;
 extern double shipTipX;

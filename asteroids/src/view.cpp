@@ -47,9 +47,6 @@ void drawInfo() {
 		for (int i=1;i<=lives;i++){
 			graphics->drawTriangle(i*20,10,(i*20)-5,25,(i*20)+5,25,WHITE);
 		}
-		
-		graphics->setCursor(300,100);
-		graphics->printf("frames: %d", frames);
 }
 
 void drawShip() {

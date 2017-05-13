@@ -18,6 +18,7 @@
 #include "model.h"
 #include "view.h"
 #include "controller.h"
+#include "utils.h"
 
 /* Game state */
 float elapsed_time; 
@@ -52,14 +53,10 @@ DigitalIn userbutton(P2_10,PullUp);
 
 void initialise() {
 	asteroids = static_cast<rock_t*>(malloc(sizeof(rock_t)));
-	asteroids->p.x = 0;
-	asteroids->p.y = 0;
-	asteroids->v.x = 2;
-	asteroids->v.y = 2;
 	asteroids->next = NULL;
 	
-	missiles = static_cast<shot_t*>(malloc(sizeof(shot_t)));
-	missiles->next = NULL;
+	//missiles = static_cast<shot_t*>(malloc(sizeof(shot_t)));
+	//missiles->next = NULL;
 	
 }
 
@@ -79,7 +76,7 @@ int main()
 		shields = 3;
     
     /* Pause to start */
-    while( userbutton.read() ){ /* remember 1 is not pressed */
+    while( userbutton.read() ){ //remember 1 is not pressed
         paused=true;
         wait_ms(100);
     }
