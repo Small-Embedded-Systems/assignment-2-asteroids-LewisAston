@@ -22,9 +22,8 @@ typedef struct rock_t {
 }rock_t;
 
 typedef struct shot_t {
-    coordinate_t p;
-		vector_t v;
-		int age;
+    coordinate_t pS;
+		vector_t vS;
     struct shot_t* next;
 }shot_t;
 
@@ -34,6 +33,7 @@ extern bool joyRight;
 extern bool joyDown;
 void shipSpin();
 void shipThrust();
+void gameOver();
 extern float angle;
 void physics(void);
-//void newShot(shot_t *head);
+void createMissile(shot_t *headS);

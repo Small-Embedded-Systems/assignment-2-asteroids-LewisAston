@@ -64,6 +64,19 @@ void shipThrust() {
 		}	
 }
 
+void shipOnScreen() {
+	if(shipY <= -10) {
+		shipY = 272;
+	}	else if(shipY >=282) {
+		shipY = 0;
+	}
+	if(shipX <= -10) {
+		shipX = 480;
+	} else if(shipX >= 490) {
+		shipX = 0;
+	}
+}
+
 void createRock(rock_t* head) {
 	if (rockCount <5) {
 		rock_t* current = head;
@@ -116,6 +129,9 @@ void rockHit (rock_t* head) {
 				shields--;
 				if (shields < 0) {
 					lives--;
+					shields = lives;
+				} if (lives <=0) {
+						gameOver();
 				}
 			}
 		current = current->next;
@@ -123,24 +139,50 @@ void rockHit (rock_t* head) {
 		}
 }
 
-
-void shipOnScreen() {
-	if(shipY <= -10) {
-		shipY = 272;
-	}	else if(shipY >=282) {
-		shipY = 0;
+void createMissile(shot_t* headS) {
+	shot_t* currentS = headS;
+	while (currentS->next !=NULL) {
+			currentS = currentS->next;
 	}
-	if(shipX <= -10) {
-		shipX = 480;
-	} else if(shipX >= 490) {
-		shipX = 0;
+	currentS->next = (shot_t*)malloc(sizeof(shot_t));
+	currentS->next->pS.x = shipTipX;
+	currentS->next->pS.y = shipTipY;
+	currentS->next->vS.x = velX;
+	currentS->next->vS.y = velY;
+	currentS->next->next = NULL;
+	shotCount++;
+}
+
+void missileMethods(shot_t* headS) {
+	shot_t* currentS = headS;
+	while (currentS !=NULL) {
+		currentS-> pS.x += currentS-> vS.x;
+		currentS-> pS.y += currentS-> vS.y;
+		currentS=currentS->next;
 	}
 }
+
+void shootRock(rock_t* head, shot_t* headS) {
+	rock_t* current = head;
+	shot_t* currentS = headS;
+	if (current !=NULL || currentS !=NULL) {
+			if (currentS->pS.x < current->p.x +8 && currentS->pS.x > current->p.x - 8 && currentS->pS.y > current->p.y -8 && currentS->pS.y < current->p.y + 8) {
+				current->p.x = randrange(10, 470);
+				current->p.y = randrange(10, 260);
+				score = score + 10;
+		}
+		current=current->next;
+		currentS=currentS->next;
+	}
+}
+
 
 void physics(void) {
 		createRock(asteroids);
 		rockWrap(asteroids);
 		rockHit(asteroids);
+		missileMethods(missiles);
+		shootRock(asteroids, missiles);
 		shipOnScreen();
 		shipSpin();
 		shipThrust();

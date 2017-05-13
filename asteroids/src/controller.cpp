@@ -44,12 +44,16 @@ void controls(void)
 		joyRight = true;
 		joyLeft = false;
 	}
+	
+	if (jsPrsdAndRlsd(centre)) {
+		createMissile(missiles);
+	}
 }
 
 bool jsPrsdAndRlsd(btnId_t b) {
 	bool result = false;
 	uint32_t state;
-	static uint32_t savedState[4] = {1,1,1,1};
+	static uint32_t savedState[5] = {1,1,1,1,1};
 	//initially all 1s: nothing pressed
 	state = joystick[b].read();
 	if ((savedState[b] == 0) && (state == 1)) {

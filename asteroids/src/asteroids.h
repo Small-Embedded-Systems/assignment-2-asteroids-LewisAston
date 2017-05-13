@@ -4,13 +4,13 @@
 		available to other modules via the extern type qualifier.
 */
 
-extern float elapsed_time; /* time this ship has been active */
-extern int   score;        /* total score so far */
-extern int   lives;        /* lives remaining */
-extern int	 shields;
-extern int rockCount;
-extern int shotCount;
-extern int frames;
+extern float 	elapsed_time; /* time this ship has been active */
+extern int   	score;        /* total score so far */
+extern int   	lives;        /* lives remaining */
+extern int	 	shields;
+extern int 	 	rockCount;
+extern int 	 	shotCount;
+extern int 	 	frames;
 extern double shipX;
 extern double shipY;
 extern double shipTipX;

@@ -41,7 +41,7 @@ void swap_DBuffer(void)
 
 void drawInfo() {
 		graphics->setCursor(400,15);
-		graphics->printf("Score: ");
+		graphics->printf("Score: %d", score);
 		graphics->setCursor(210,15);
 		graphics->printf("ASTEROIDS");
 		for (int i=1;i<=lives;i++){
@@ -64,6 +64,14 @@ void drawRock(rock_t *head) {
 	}
 }
 
+void drawMissile(shot_t *headS) {
+	shot_t* currentS = headS;
+	while ( currentS !=NULL) {
+		graphics->fillCircle(currentS->pS.x, currentS->pS.y, 1, WHITE);
+		currentS = currentS->next;
+	}
+}
+
 void drawShield()
 {
 	for (int i=1;i<=shields;i++){
@@ -71,12 +79,29 @@ void drawShield()
   }
 }
 
+void gameOver() {
+	graphics->fillScreen(BLACK);
+	graphics->setTextSize(4);
+	graphics->setCursor(160,40);
+	graphics->printf("GAME OVER");
+	graphics->setTextSize(2);
+	graphics->setCursor(180,100);
+	graphics->printf("Your score = %d", score);
+	graphics->setCursor(120,170);
+	graphics->printf("press RESET to start again");
+}
+
 void draw(void)
 {
+	if (lives > 0) {
     graphics->fillScreen(background);
 		drawInfo();
 		drawShip();
 		drawShield();
 		drawRock(asteroids);
-    swap_DBuffer();
+    drawMissile(missiles);
+	} else {
+		gameOver();
+	}
+	swap_DBuffer();
 }

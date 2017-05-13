@@ -55,8 +55,8 @@ void initialise() {
 	asteroids = static_cast<rock_t*>(malloc(sizeof(rock_t)));
 	asteroids->next = NULL;
 	
-	//missiles = static_cast<shot_t*>(malloc(sizeof(shot_t)));
-	//missiles->next = NULL;
+	missiles = static_cast<shot_t*>(malloc(sizeof(shot_t)));
+	missiles->next = NULL;
 	
 }
 
@@ -66,25 +66,13 @@ int main()
 		srand(time(0));
 		initialise();
     init_DBuffer();
-    
 
     view.attach( draw, 0.025);
     model.attach( physics, Dt);
     controller.attach( controls, 0.1);
     
+		score = 0;
     lives = 3;
 		shields = 3;
-    
-    /* Pause to start */
-    while( userbutton.read() ){ //remember 1 is not pressed
-        paused=true;
-        wait_ms(100);
-    }
-    paused = false;
-    
-    while(true) {
-        
-        
-        
-    }
+
 }
