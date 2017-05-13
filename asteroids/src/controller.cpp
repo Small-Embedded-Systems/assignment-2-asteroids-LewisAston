@@ -24,7 +24,7 @@ bool jsPrsdAndRlsd(btnId_t b);
 
 void controls(void)
 {
-	if (jsPrsdAndRlsd(up)) {
+	if (jsPrsdAndRlsd(up)) { 
 		joyUp = true;
 		joyLeft = false;
 		joyRight = false;
@@ -46,7 +46,7 @@ void controls(void)
 	}
 	
 	if (jsPrsdAndRlsd(centre)) {
-		createMissile(missiles);
+		createMissile(missiles); //creates new missile on joystick center press
 	}
 }
 

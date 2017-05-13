@@ -14,18 +14,18 @@ struct ship {
     vector_t     v;
 };
 
-/* initial struts for building linked lists */
+//rock struct 
 typedef struct rock_t {
     coordinate_t p;
 		vector_t v;
-    struct rock_t* next;
-}rock_t;
-
+    struct rock_t* next; //iterates next rock in list
+}rock_t; //recursive op
+//shot struct
 typedef struct shot_t {
     coordinate_t pS;
 		vector_t vS;
-    struct shot_t* next;
-}shot_t;
+    struct shot_t* next; //iterates next shot in list
+}shot_t; //recursive op
 
 extern bool joyUp;
 extern bool joyLeft;
