@@ -14,16 +14,18 @@ struct ship {
     vector_t     v;
 };
 
-/* initial struts for building linked lists */
-struct rock {
+//rock struct 
+typedef struct rock_t {
     coordinate_t p;
-    struct rock *next;
-};
-
-struct missile {
-    coordinate_t p;
-    struct missile *next;
-};
+		vector_t v;
+    struct rock_t* next; //iterates next rock in list
+}rock_t; //recursive op
+//shot struct
+typedef struct shot_t {
+    coordinate_t pS;
+		vector_t vS;
+    struct shot_t* next; //iterates next shot in list
+}shot_t; //recursive op
 
 extern bool joyUp;
 extern bool joyLeft;
@@ -31,5 +33,7 @@ extern bool joyRight;
 extern bool joyDown;
 void shipSpin();
 void shipThrust();
+void gameOver();
 extern float angle;
 void physics(void);
+void createMissile(shot_t *headS);

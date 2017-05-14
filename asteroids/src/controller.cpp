@@ -24,7 +24,7 @@ bool jsPrsdAndRlsd(btnId_t b);
 
 void controls(void)
 {
-	if (jsPrsdAndRlsd(up)) {
+	if (jsPrsdAndRlsd(up)) { 
 		joyUp = true;
 		joyLeft = false;
 		joyRight = false;
@@ -44,12 +44,24 @@ void controls(void)
 		joyRight = true;
 		joyLeft = false;
 	}
+	
+	if (jsPrsdAndRlsd(centre)) {
+		createMissile(missiles); //creates new missile on joystick center press
+	}
+
 }
+//bool for gamestate
+bool (restartGame(void)) {
+		if (lives==0 && jsPrsdAndRlsd(centre)) {
+			return true;
+		}
+		return false;
+	}
 
 bool jsPrsdAndRlsd(btnId_t b) {
 	bool result = false;
 	uint32_t state;
-	static uint32_t savedState[4] = {1,1,1,1};
+	static uint32_t savedState[5] = {1,1,1,1,1};
 	//initially all 1s: nothing pressed
 	state = joystick[b].read();
 	if ((savedState[b] == 0) && (state == 1)) {

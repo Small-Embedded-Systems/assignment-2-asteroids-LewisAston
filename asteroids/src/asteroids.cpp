@@ -18,21 +18,29 @@
 #include "model.h"
 #include "view.h"
 #include "controller.h"
+#include "utils.h"
 
 /* Game state */
 float elapsed_time; 
 int   score;
 int   lives;
 int 	shields;
+int frames;
+int rockCount;
+int shotCount;
 struct ship player;
 double shipX = 240;
 double shipY = 146;
+double rockX = 100;
+double rockY = 100;
 double shipTipX = shipX;
 double shipTipY = shipY-15;
 double shipRghtCrnrX = shipX +7;
 double shipRghtCrnrY = shipY +10;
 double shipLftCrnrX = shipX -7;
 double shipLftCrnrY = shipY +10;
+rock_t *asteroids;
+shot_t *missiles;
 
 float Dt = 0.01f;
 
@@ -41,29 +49,47 @@ Ticker model, view, controller;
 bool paused = true;
 /* The single user button needs to have the PullUp resistor enabled */
 DigitalIn userbutton(P2_10,PullUp);
-int main()
-{
+//initialises both asteroids and missile lists
+void initialiseLists() {
+	asteroids = static_cast<rock_t*>(malloc(sizeof(rock_t)));
+	asteroids->next = NULL;
+	
+	missiles = static_cast<shot_t*>(malloc(sizeof(shot_t)));
+	missiles->next = NULL;
+}
 
-    init_DBuffer();
-    
+int main() {
+	srand(time(0));
+	initialiseLists();
+	init_DBuffer();
 
-    view.attach( draw, 0.025);
-    model.attach( physics, Dt);
-    controller.attach( controls, 0.1);
-    
-    lives = 3;
-		shields = 3;
-    
-    /* Pause to start */
-    while( userbutton.read() ){ /* remember 1 is not pressed */
-        paused=true;
-        wait_ms(100);
-    }
-    paused = false;
-    
-    while(true) {
-        
-        
-        
-    }
+	view.attach( draw, 0.025);
+	model.attach( physics, Dt);
+	controller.attach( controls, 0.1);
+	
+	score = 0;
+	lives = 3;
+	shields = lives;
+		while(true) {
+			if (lives < 1) {
+				view.detach();
+				model.detach();
+				controller.detach();
+				gameOver();
+			}
+			if (restartGame()) {
+				srand(time(0));
+				initialiseLists();
+				init_DBuffer();
+
+				view.attach( draw, 0.025);
+				model.attach( physics, Dt);
+				controller.attach( controls, 0.1);
+				
+				score = 0;
+				lives = 3;
+				shields = lives;
+				draw();
+			}
+		}
 }
