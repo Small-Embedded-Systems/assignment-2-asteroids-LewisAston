@@ -50,7 +50,7 @@ bool paused = true;
 /* The single user button needs to have the PullUp resistor enabled */
 DigitalIn userbutton(P2_10,PullUp);
 //initialises both asteroids and missile lists
-void initialise() {
+void initialiseLists() {
 	asteroids = static_cast<rock_t*>(malloc(sizeof(rock_t)));
 	asteroids->next = NULL;
 	
@@ -59,15 +59,37 @@ void initialise() {
 }
 
 int main() {
-		srand(time(0));
-		initialise();
-    init_DBuffer();
+	srand(time(0));
+	initialiseLists();
+	init_DBuffer();
 
-    view.attach( draw, 0.025);
-    model.attach( physics, Dt);
-    controller.attach( controls, 0.1);
-    
-		score = 0;
-    lives = 3;
-		shields = 3;
+	view.attach( draw, 0.025);
+	model.attach( physics, Dt);
+	controller.attach( controls, 0.1);
+	
+	score = 0;
+	lives = 3;
+	shields = lives;
+		while(true) {
+			if (lives < 1) {
+				view.detach();
+				model.detach();
+				controller.detach();
+				gameOver();
+			}
+			if (restartGame()) {
+				srand(time(0));
+				initialiseLists();
+				init_DBuffer();
+
+				view.attach( draw, 0.025);
+				model.attach( physics, Dt);
+				controller.attach( controls, 0.1);
+				
+				score = 0;
+				lives = 3;
+				shields = lives;
+				draw();
+			}
+		}
 }

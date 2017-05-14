@@ -79,6 +79,7 @@ void drawShield() {
 }
 //gameover screen after loosing all lives
 void gameOver() {
+	swap_DBuffer();
 	graphics->fillScreen(BLACK);
 	graphics->setTextSize(4);
 	graphics->setCursor(160,40);
@@ -87,20 +88,23 @@ void gameOver() {
 	graphics->setCursor(180,100);
 	graphics->printf("Your score = %d", score);
 	graphics->setCursor(120,170);
-	graphics->printf("press RESET to start again");
+	graphics->printf("press CENTER to start again");
+	graphics->setTextSize(1);
+	init_DBuffer();
+}
+
+void increaseScore() {
+	score++;
 }
 
 void draw(void)
 {
-	if (lives > 0) {
-    graphics->fillScreen(background);
-		drawInfo();
-		drawShip();
-		drawShield();
-		drawRock(asteroids);
-    drawMissile(missiles);
-	} else {
-		gameOver();
-	}
+	graphics->fillScreen(background);
+	drawInfo();
+	drawShip();
+	drawShield();
+	drawRock(asteroids);
+	drawMissile(missiles);
+	increaseScore();
 	swap_DBuffer();
 }

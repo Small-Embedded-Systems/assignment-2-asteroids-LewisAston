@@ -7,3 +7,4 @@ bool joyRight;
 bool joyLeft;
 bool joyDown;
 void controls(void);
+bool restartGame(void);

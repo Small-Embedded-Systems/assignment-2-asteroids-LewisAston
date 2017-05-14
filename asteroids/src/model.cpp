@@ -128,8 +128,10 @@ void rockHit (rock_t* head) {
 				current->p.x = randrange(10, 470); //relocates rock once hits ship
 				current->p.y = randrange(10, 260);
 				shields--; //decrement shield if hit
+				score = score - 100;
 				if (shields < 0) {
 					lives--; //if no shields left, decrement lives
+					score = score - 200;
 					shields = lives; //shields relative to lives
 				} if (lives <=0) {
 						gameOver(); //generate gameover screen when lives = 0

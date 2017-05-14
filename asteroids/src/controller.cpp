@@ -48,7 +48,15 @@ void controls(void)
 	if (jsPrsdAndRlsd(centre)) {
 		createMissile(missiles); //creates new missile on joystick center press
 	}
+
 }
+//bool for gamestate
+bool (restartGame(void)) {
+		if (lives==0 && jsPrsdAndRlsd(centre)) {
+			return true;
+		}
+		return false;
+	}
 
 bool jsPrsdAndRlsd(btnId_t b) {
 	bool result = false;
